@@ -13,10 +13,16 @@ function Guess({ onSubmit }: Props) {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    onSubmit(guess);
+    onSubmit(guess);  
+    let index = statesArray.findIndex(state => state.name === guess);
     setGuess("");
+    setStatesArray(prev => {
+      const newStatesArray = prev.slice(0);
+      newStatesArray.splice(index, 1);
+      return newStatesArray;
+    });
   }
-
+  
   return (
     <div className="Guess">
       <form onSubmit={handleSubmit}>
