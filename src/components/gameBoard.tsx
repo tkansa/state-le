@@ -5,20 +5,20 @@ import './GameBoard.css';
 
 function GameBoard() {
 
-  let [ geusses, setGuesses ] = useState<string[]>([]);
-  let [ stateName, setStateName ] = useState<string>("");
+  let [geusses, setGuesses] = useState<string[]>([]);
+  let [stateName, setStateName] = useState<string>("");
 
- 
+
   useEffect(() => {
-    let index = Math.floor(Math.random() * 7);
+    let index = Math.floor(Math.random() * 8);
     let state: string = states[index].name;
-    setStateName(state);
-    
+    setStateName(state.toLocaleLowerCase());
+
   }, []);
 
-console.log(stateName);
+  console.log(stateName);
   function handleGuess(guess: string): void {
-   // console.log(guess);
+    // console.log(guess);
     setGuesses(prev => {
       const newList = prev.slice(0);
       newList.push(guess);
@@ -28,15 +28,18 @@ console.log(stateName);
 
   return (
     <div className="GameBoard">
-      <h1>State-le</h1>
-       <div>{
-        stateName.length > 1 && <img className="state-container" src={'../images/nevada.png'} alt="State to Guess"/>
-        }</div> 
-      <Guess onSubmit={handleGuess} />
-      <div>
-        {geusses.length > 0 &&
-          geusses.map((guess, i) => <p key={i}>Guess {i + 1}: {guess}</p>)}
+      <div className="content">
+        <h1>State-le</h1>
+        <div>{
+          stateName.length > 1 && <img className="state-container" src={`../images/${stateName}.png`} alt="State to Guess" />
+        }</div>
+        <Guess onSubmit={handleGuess} />
+        <div>
+          {geusses.length > 0 &&
+            geusses.map((guess, i) => <p key={i}>Guess {i + 1}: {guess}</p>)}
+        </div>
       </div>
+      <footer className="footer">State images courtesy of <a href="https://suncatcherstudio.com/" target="_blank">Sun Catcher Studio</a></footer>
     </div>
   );
 }

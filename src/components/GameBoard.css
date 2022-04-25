@@ -1,4 +1,16 @@
+body {
+    height: 100%;
+    display: flex;
+    justify-content: center; 
+}
+
 .state-container {
     width: 150px;
     height: 150px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 15px;
 }
