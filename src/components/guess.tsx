@@ -26,13 +26,14 @@ function Guess({ onSubmit }: Props) {
   return (
     <div className="Guess">
       <form onSubmit={handleSubmit}>
-        <div><label htmlFor="state">Guess the state:
+        <div><label htmlFor="state">Guess the state:</label>
+        <div>
           <select onChange={(e) => setGuess(e.target.value)} id="state">
             <option value="">Choose a state</option>
             {states.map((state, i) => <option key={i} value={state.name}>{state.name}</option>)}
-          </select>
-        </label>
+          </select>   
           <input type="submit" value="Submit" />
+          </div>
         </div>
       </form>
     </div>
