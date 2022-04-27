@@ -4,10 +4,11 @@ import { states } from '../domain/states';
 
 interface Props {
   onSubmit: (guess: string) => void;
+  gameOver: boolean;
 }
 
-function Guess({ onSubmit }: Props) {
-
+function Guess({ onSubmit, gameOver }: Props) {
+ console.log(gameOver)
   let [guess, setGuess] = useState<string>("");
   let [statesArray, setStatesArray] = useState<State[]>(states);
 
@@ -15,7 +16,7 @@ function Guess({ onSubmit }: Props) {
     e.preventDefault();
     onSubmit(guess);  
     let index = statesArray.findIndex(state => state.name === guess);
-    setGuess("");
+    
     setStatesArray(prev => {
       const newStatesArray = prev.slice(0);
       newStatesArray.splice(index, 1);
@@ -26,13 +27,13 @@ function Guess({ onSubmit }: Props) {
   return (
     <div className="Guess">
       <form onSubmit={handleSubmit}>
-        <div><label htmlFor="state">Guess the state:</label>
+        <div><label htmlFor="state">Guess the state within 6 guesses:</label>
         <div>
           <select onChange={(e) => setGuess(e.target.value)} id="state">
             <option value="">Choose a state</option>
             {states.map((state, i) => <option key={i} value={state.name}>{state.name}</option>)}
           </select>   
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Submit" disabled={gameOver} />
           </div>
         </div>
       </form>
