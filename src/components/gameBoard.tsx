@@ -1,6 +1,7 @@
 import Guess from './Guess';
 import { getCompassDirection, getDistance } from 'geolib';
 import { getDirectionEmoji } from '../domain/directions';
+import GuessRow from './GuessRow';
 import { State } from '../domain/state';
 import { states } from '../domain/states';
 import { useEffect, useState } from 'react';
@@ -18,7 +19,7 @@ function GameBoard() {
 
   // on startup, pick a random state
   useEffect(() => {
-    let index = Math.floor(Math.random() * 8);
+    let index = Math.floor(Math.random() * 26);
     let state: string = states[index].name;
     setStateName(state.toLocaleLowerCase());
 
@@ -67,6 +68,7 @@ function GameBoard() {
       });
 
       let compassDirection: string = getCompassDirection({ latitude: guessedState!.latitude, longitude: guessedState!.longitude }, { latitude: state!.latitude, longitude: state!.longitude });
+      debugger;
       let directionEmoji: string = getDirectionEmoji(distance, compassDirection);
       setDirectionEmojis(prev => {
         const newList = prev.slice(0);
@@ -89,10 +91,20 @@ function GameBoard() {
           stateName.length > 1 && <img className="state-container" src={`../images/${stateName}.png`} alt="State to Guess" />
         }</div>
         <Guess onSubmit={handleGuess} gameOver={gameOver} />
-        <div>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Guess</th>
+              <th>Distance</th>
+              <th>Direction</th>
+            </tr>
+          </thead>
+          <tbody>
           {guesses.length > 0 &&
-            guesses.map((guess, i) => <p key={i}>Guess {i + 1}: {guess} | {guessResults[i]} Distance: {distances[i]}, Direction: {directionEmojis[i]}</p>)}
-        </div>
+            guesses.map((guess, i) => <GuessRow key={i} guessNumber={i + 1} guess={guess} distance={distances[i]} direction={directionEmojis[i]}></GuessRow>)}
+          </tbody>
+        </table>
         <div>{gameOver && <p>Learn more: <a href={`https://en.wikipedia.org/wiki/${stateName}`} target="_blank">{stateName}</a></p>}</div>
       </div>
       <footer className="footer">State images courtesy of <a href="https://suncatcherstudio.com/" target="_blank">Sun Catcher Studio</a> | Inspired by <a href="https://worldle.teuteuf.fr/" target="_blank">Worldle</a></footer>
