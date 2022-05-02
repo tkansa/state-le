@@ -28,6 +28,7 @@ function GameBoard() {
   
 
   console.log(stateName);
+  console.log("Arrow: " + '\uFE0F')
   function handleGuess(guess: string): void {
     if(guesses.length === 5){
       setGameOver(true);
@@ -59,8 +60,8 @@ function GameBoard() {
       });
       let state: State | undefined = states.find(s => s.name.toLocaleLowerCase() === stateName);
       let guessedState: State | undefined = states.find(s => s.name === guess);
-      let distance: number = getDistance({ latitude: state!.latitude, longitude: state!.longitude }, { latitude: guessedState!.latitude, longitude: guessedState!.longitude }) / 1000;
-      
+      let distance: number = getDistance({ latitude: state!.latitude, longitude: state!.longitude }, { latitude: guessedState!.latitude, longitude: guessedState!.longitude }) / 1609;
+      distance = Math.round(distance);
       setDistances(prev => {
         const newList = prev.slice(0);
         newList.push(distance);
@@ -94,10 +95,10 @@ function GameBoard() {
         <table>
           <thead>
             <tr>
-              <th>#</th>
-              <th>Guess</th>
-              <th>Distance</th>
-              <th>Direction</th>
+              <th className='guess-number'>#</th>
+              <th className='guess'>Guess</th>
+              <th className='distance'>Distance</th>
+              <th className='direction'>Direction</th>
             </tr>
           </thead>
           <tbody>

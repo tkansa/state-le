@@ -1,0 +1,19 @@
+.guess-number {
+    width: 25px;
+}
+
+.guess {
+    width: 125px;
+}
+
+.distance {
+    width: 100px;
+}
+
+.direction {
+    width: 100px;
+}
+
+th {
+    text-align: left;
+}
